@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import "./App.css";
 import { Box, Flex, Stack, Input } from "@chakra-ui/react";
 import { PrimaryButton } from "./components/PrimaryButton";
 
-const firebaseConfig = {};
+const firebaseConfig = {
+  apiKey: "AIzaSyCHqT03hCxcWJZwMPb5dphVFdHRP8oIJRY",
+  authDomain: "fir-lesson-2d2dd.firebaseapp.com",
+  projectId: "fir-lesson-2d2dd",
+  storageBucket: "fir-lesson-2d2dd.appspot.com",
+  messagingSenderId: "970049446735",
+  appId: "1:970049446735:web:efc307615847b6dc88db3a",
+};
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -14,6 +22,25 @@ function App() {
   const [userName, setUserName] = useState("");
   const [age, setAge] = useState("");
   const [documentId, setDocumentId] = useState("");
+
+  //やっていることはhandleClickFetchButtonの時と一緒
+  useEffect(() => {
+    const unSub = db.collection("users").onSnapshot((snapshot) => {
+      //userコレクションのdataに何かしらの変化があったときに検知する 自動でcallback関数が実行される
+      //dataをセットする記述
+      //docsは配列、mapメソッドでdataを生成したものを配列_usersに格納している
+      const _users = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setUsers(_users); //setUsersで生成されたdataを更新　最終的にuserListItemsに渡され表示される
+    });
+    return () => {
+      unSub();
+    };
+  }, []);
 
   const handleClickFetchButton = async () => {
     // document取得
