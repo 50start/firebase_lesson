@@ -5,12 +5,7 @@ import { Box, Flex, Stack, Input } from "@chakra-ui/react";
 import { PrimaryButton } from "./components/PrimaryButton";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCHqT03hCxcWJZwMPb5dphVFdHRP8oIJRY",
-  authDomain: "fir-lesson-2d2dd.firebaseapp.com",
-  projectId: "fir-lesson-2d2dd",
-  storageBucket: "fir-lesson-2d2dd.appspot.com",
-  messagingSenderId: "970049446735",
-  appId: "1:970049446735:web:efc307615847b6dc88db3a",
+  
 };
 
 firebase.initializeApp(firebaseConfig);
